@@ -11,7 +11,7 @@ from sqlalchemy import text
 
 # === DATABASE SETUP ===
 # MySQL 접속정보를 본인 환경에 맞게 수정하세요.
-DATABASE_URL = "mysql+mysqlconnector://root:Tmdrnjs159!@localhost/emr_db"
+
 
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
