@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>GuGu Medical Center EMR - 대시보드</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .header { text-align: center; }
+    .category-container { text-align: center; margin-top: 20px; }
+    .category-button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 5px;
+      background-color: #eee;
+      text-decoration: none;
+      color: #333;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .category-button.active {
+      background-color: #4CAF50;
+      color: white;
+      border-color: #4CAF50;
+    }
+    .search-container { margin: 20px; text-align: center; }
+    .patient-list { margin-top: 20px; text-align: center; }
+    .patient-item { margin: 5px 0; }
+    .footer { position: fixed; bottom: 10px; right: 10px; font-size: 10px; }
+    a.button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 20px;
+    }
+    .fixed-button {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>GuGu Medical Center EMR</h1>
+  </div>
+  
+  <!-- 카테고리 선택 버튼 -->
+  <div class="category-container">
+    <a href="/dashboard?category=진료부" class="category-button {% if category == '진료부' %}active{% endif %}">진료부</a>
+    <a href="/dashboard?category=약국부" class="category-button {% if category == '약국부' %}active{% endif %}">약국부</a>
+    <a href="/dashboard?category=간호부" class="category-button {% if category == '간호부' %}active{% endif %}">간호부</a>
+  </div>
+  
+  <!-- 모든 카테고리에서 검색창 및 결과 표시 -->
+  <div class="search-container">
+    <form action="/dashboard" method="get">
+      <input type="hidden" name="category" value="{{ category }}">
+      <input type="text" name="query" placeholder="환자 이름 검색" value="{{ query if query }}">
+      <button type="submit">검색</button>
+    </form>
+    {% if patients %}
+      <div class="patient-list">
+        <ul style="list-style: none; padding: 0;">
+          {% for p in patients %}
+            <li class="patient-item">
+              <a href="/patient?name={{ p[0] | urlencode }}&birth_date={{ p[1].strftime('%Y-%m-%d') | urlencode }}">
+                {{ p[0] }} ({{ p[1].strftime('%Y-%m-%d') }})
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+  
+  <!-- 진료부일 경우에만 EMR 작성 버튼 표시 -->
+  {% if category == "진료부" %}
+    <div style="text-align: center;">
+      <a class="button" href="/emr/new">EMR 작성</a>
+    </div>
+  {% endif %}
+  
+  <div class="footer">
+    개발자: 조승권
+  </div>
+  <!-- 왼쪽 아래에 고정된 환자목록 버튼 -->
+<a href="/registration" class="fixed-button">환자목록</a>
+
+</body>
+</html>

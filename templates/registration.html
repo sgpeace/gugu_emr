@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>환자 접수표</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+    th { background-color: #f2f2f2; }
+    form { display: inline; }
+    /* 왼쪽 아래에 항상 보이는 원형 버튼 */
+    .fixed-button {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      line-height: 60px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    /* 왼쪽 상단 Home 버튼 */
+    .home-button {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background-color: #2196F3;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    /* 오른쪽 하단 초기화 버튼 */
+    .reset-button {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background-color: #f44336;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .footer { position: fixed; bottom: 10px; right: 10px; font-size: 10px; }
+  </style>
+</head>
+<body>
+  <!-- 왼쪽 상단 Home 버튼 -->
+  <a href="/dashboard" class="home-button">Home</a>
+  
+  <h1>환자 접수표</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>순번</th>
+        <th>환자이름</th>
+        <th>상태</th>
+        <th>액션</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reg in registrations %}
+      <tr>
+        <td>{{ reg.id }}</td>
+        <td>
+          <form action="/registration/update" method="post" style="display: inline;">
+            <input type="hidden" name="id" value="{{ reg.id }}">
+            <input type="text" name="patient_name" value="{{ reg.patient_name }}" required>
+        </td>
+        <td>
+            <input type="text" name="status" value="{{ reg.status }}" required>
+        </td>
+        <td>
+            <button type="submit">수정</button>
+          </form>
+          <form action="/registration/delete" method="post" style="display: inline;">
+            <input type="hidden" name="id" value="{{ reg.id }}">
+            <button type="submit" onclick="return confirm('삭제하시겠습니까?')">삭제</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <h2>새 접수 추가</h2>
+  <!-- 상태 입력란은 제거되어, 환자이름만 입력받음 -->
+  <form action="/registration/add" method="post">
+    <label>환자이름: <input type="text" name="patient_name" required></label>
+    <button type="submit">추가</button>
+  </form>
+  
+  <!-- 왼쪽 아래 고정 환자목록 버튼 -->
+  <a href="/registration" class="fixed-button">환자목록</a>
+  
+  <!-- 오른쪽 하단 초기화 버튼 -->
+  <form action="/registration/reset" method="post" style="position: fixed; bottom: 10px; right: 10px;">
+    <button type="submit" class="reset-button" onclick="return confirm('정말로 초기화하시겠습니까?')">초기화</button>
+  </form>
+  
+  <div class="footer">
+    개발자: 조승권
+  </div>
+</body>
+</html>

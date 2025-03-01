@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>GuGu Medical Center EMR - 로그인</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .container { width: 300px; margin: 100px auto; text-align: center; }
+    h1 { font-size: 24px; }
+    input { width: 90%; padding: 10px; margin: 5px 0; }
+    button { padding: 10px 20px; }
+    .error { color: red; }
+    .footer { position: fixed; bottom: 10px; right: 10px; font-size: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GuGu Medical Center EMR</h1>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    <form action="/login" method="post">
+      <input type="text" name="username" placeholder="아이디" required><br>
+      <input type="password" name="password" placeholder="비밀번호" required><br>
+      <button type="submit">로그인</button>
+    </form>
+  </div>
+  <div class="footer">
+    개발자: 조승권
+  </div>
+</body>
+</html>
