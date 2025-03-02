@@ -8,11 +8,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from datetime import datetime
 from sqlalchemy import text
+import os
 
 # === DATABASE SETUP ===
 # MySQL 접속정보를 본인 환경에 맞게 수정하세요.
 
-
+DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
