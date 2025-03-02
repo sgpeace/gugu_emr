@@ -9,11 +9,12 @@ from sqlalchemy.orm import sessionmaker, Session
 from datetime import datetime
 from sqlalchemy import text
 import os
+from dotenv import load_dotenv
 
 # === DATABASE SETUP ===
 # MySQL 접속정보를 본인 환경에 맞게 수정하세요.
-
-DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://root:Tmdrnjs159!@localhost/emr_db")
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
