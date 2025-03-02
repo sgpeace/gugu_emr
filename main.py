@@ -42,7 +42,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 # 정적파일 경로 설정
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 # 데이터베이스 세션 의존성
